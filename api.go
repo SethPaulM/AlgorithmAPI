@@ -9,7 +9,7 @@ import (
 func main() {
 	// InsertionSort()
 	// MergeSort()
-	QuickSort([8]int{2, 8, 7, 1, 3, 5, 6, 4}, 0 , 7)
+	QuickSort([]int{2, 8, 7, 1, 3, 5, 6, 4}, 0 , 7)
 }
 
 func InsertionSort() {
@@ -71,44 +71,26 @@ func MergeSort() {
 	fmt.Println(array)
 }
 
-func QuickSort(A [8]int, p int, r int) {
+
+func QuickSort(A []int, p int, r int) {
 	if p < r {
-		var x int = A[r]
-		var i int = p - 1
-		for j := p; j < r - 1; j++ {
-			if A[j] <= x {
-				i = i + 1
-				A[i], A[j] = A[j], A[i]
-			}
-		}
-		A[i + 1], A[r] = A[r], A[i + 1]
-		i = i + 1
-		QuickSort(A, p, i - 1)
-		QuickSort(A, i + 1, r)
+		q := Partition(A, p, r)
+		QuickSort(A, p, q - 1)
+		QuickSort(A, q + 1, r)
 		fmt.Println(A)
 	}
 	
 }
 
-func Partition(A [8]int, p int, r int) int {
-	var x int = A[r]
-	var i int = p - 1
-	for j := p; j < r - 1; j++ {
+func Partition(A []int, p int, r int) int {
+	x := A[r]
+	i := p - 1
+	for j := p; j < r; j++ {
 		if A[j] <= x {
-			i = i + 1
+			i++
 			A[i], A[j] = A[j], A[i]
 		}
 	}
 	A[i + 1], A[r] = A[r], A[i + 1]
 	return i + 1
 }
-
-/* 
-.A; p; r/
-if p < r
-2 // Partition the subarray around the pivot, which ends up in AŒq�.
-3 q D PARTITION.A; p; r/
-4 QUICKSORT.A; p; q  1/ // recursively sort the low side
-5 QUICKSORT.A; q C 1; r/ // recursively sort the high side 
-
-*/
