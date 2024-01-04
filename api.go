@@ -3,11 +3,13 @@ package main
 import (
 	"fmt"
 	// "net/http"
+	// "strconv"
 )
 
 func main() {
 	// InsertionSort()
-	MergeSort()
+	// MergeSort()
+	QuickSort([8]int{2, 8, 7, 1, 3, 5, 6, 4}, 0 , 7)
 }
 
 func InsertionSort() {
@@ -68,3 +70,45 @@ func MergeSort() {
 	fmt.Println(right_array)
 	fmt.Println(array)
 }
+
+func QuickSort(A [8]int, p int, r int) {
+	if p < r {
+		var x int = A[r]
+		var i int = p - 1
+		for j := p; j < r - 1; j++ {
+			if A[j] <= x {
+				i = i + 1
+				A[i], A[j] = A[j], A[i]
+			}
+		}
+		A[i + 1], A[r] = A[r], A[i + 1]
+		i = i + 1
+		QuickSort(A, p, i - 1)
+		QuickSort(A, i + 1, r)
+		fmt.Println(A)
+	}
+	
+}
+
+func Partition(A [8]int, p int, r int) int {
+	var x int = A[r]
+	var i int = p - 1
+	for j := p; j < r - 1; j++ {
+		if A[j] <= x {
+			i = i + 1
+			A[i], A[j] = A[j], A[i]
+		}
+	}
+	A[i + 1], A[r] = A[r], A[i + 1]
+	return i + 1
+}
+
+/* 
+.A; p; r/
+if p < r
+2 // Partition the subarray around the pivot, which ends up in AŒq�.
+3 q D PARTITION.A; p; r/
+4 QUICKSORT.A; p; q  1/ // recursively sort the low side
+5 QUICKSORT.A; q C 1; r/ // recursively sort the high side 
+
+*/
